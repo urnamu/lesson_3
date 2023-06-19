@@ -1,0 +1,160 @@
+Index: .idea/inspectionProfiles/profiles_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/profiles_settings.xml b/.idea/inspectionProfiles/profiles_settings.xml
+new file mode 100644
+--- /dev/null	(date 1687171354028)
++++ b/.idea/inspectionProfiles/profiles_settings.xml	(date 1687171354028)
+@@ -0,0 +1,6 @@
++<component name="InspectionProjectProfileManager">
++  <settings>
++    <option name="USE_PROJECT_PROFILE" value="false" />
++    <version value="1.0" />
++  </settings>
++</component>
+\ No newline at end of file
+Index: home_task.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/home_task.sql b/home_task.sql
+new file mode 100644
+--- /dev/null	(date 1687201117959)
++++ b/home_task.sql	(date 1687201117959)
+@@ -0,0 +1,47 @@
++/*
++ Завдання на SQL до лекції 03.
++ */
++
++
++/*
++1.
++Вивести кількість фільмів в кожній категорії.
++Результат відсортувати за спаданням.
++
++*/
++
++SELECT category.name, COUNT(film_category.film_id) FROM film_category, category WHERE film_category.category_id=category.category_id GROUP BY category.category_id ORDER BY COUNT(film_category.film_id) DESC;
++
++/*
++
++Вивести 10 акторів, чиї фільми брали на прокат найбільше.
++Результат відсортувати за спаданням.
++*/
++
++SELECT COUNT(rental.rental_id), actor.actor_id, actor.first_name, actor.last_name FROM rental, inventory, film, film_actor, actor WHERE actor.actor_id=film_actor.actor_id AND film_actor.film_id=film.film_id AND inventory.film_id=film.film_id AND inventory.inventory_id=rental.inventory_id GROUP BY actor.actor_id ORDER by COUNT(rental.rental_id) DESC LIMIT 10;
++
++/*
++3.
++Вивести категорія фільмів, на яку було витрачено найбільше грошей
++в прокаті
++*/
++
++
++SELECT category.category_id, category.name FROM category, film_category, payment, rental, inventory, film WHERE payment.rental_id=rental.rental_id AND inventory.film_id=film.film_id AND inventory.inventory_id=rental.inventory_id AND film_category.category_id=category.category_id GROUP BY category.category_id ORDER BY SUM(payment.amount) DESC LIMIT 1;
++
++/*
++4.
++Вивести назви фільмів, яких не має в inventory.
++Запит має бути без оператора IN
++*/
++
++SELECT film_id, title FROM film WHERE NOT EXISTS (SELECT film_id FROM inventory WHERE inventory.film_id=film.film_id);
++
++/*
++5.
++Вивести топ 3 актори, які найбільше зʼявлялись в категорії фільмів “Children”.
++*/
++
++SELECT COUNT(film.film_id), actor.actor_id, actor.first_name, actor.last_name FROM film, film_actor, actor, film_category WHERE film_category.film_id=film.film_id AND film_category.category_id=3 AND actor.actor_id=film_actor.actor_id AND film_actor.film_id=film.film_id GROUP BY actor.actor_id ORDER by COUNT(film.film_id) DESC LIMIT 7;
++
++/* не зовсім коректна постановка завдання, тому що 4 актори мають однаковий рейтинг за цією вибіркою */
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1687171354133)
++++ b/.idea/.gitignore	(date 1687171354133)
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1687201480365)
++++ b/.idea/vcs.xml	(date 1687201480365)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/lesson_3.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/lesson_3.iml b/.idea/lesson_3.iml
+new file mode 100644
+--- /dev/null	(date 1687171353975)
++++ b/.idea/lesson_3.iml	(date 1687171353975)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="PYTHON_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/venv" />
++    </content>
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(date 1687171353986)
++++ b/.idea/modules.xml	(date 1687171353986)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/lesson_3.iml" filepath="$PROJECT_DIR$/.idea/lesson_3.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1687171354009)
++++ b/.idea/misc.xml	(date 1687171354009)
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (lesson_3)" project-jdk-type="Python SDK" />
++</project>
+\ No newline at end of file
