@@ -27,7 +27,7 @@ SELECT COUNT(rental.rental_id), actor.actor_id, actor.first_name, actor.last_nam
 */
 
 
-SELECT category.category_id, category.name FROM category, film_category, payment, rental, inventory, film WHERE payment.rental_id=rental.rental_id AND inventory.film_id=film.film_id AND inventory.inventory_id=rental.inventory_id AND film_category.category_id=category.category_id GROUP BY category.category_id ORDER BY SUM(payment.amount) DESC LIMIT 1;
+SELECT category.category_id, category.name FROM category, film_category, payment, rental, inventory, film WHERE payment.rental_id=rental.rental_id AND inventory.film_id=film.film_id AND inventory.inventory_id=rental.inventory_id AND film_category.film_id=film.film_id AND film_category.category_id=category.category_id GROUP BY category.category_id ORDER BY SUM(payment.amount) DESC LIMIT 1;
 
 /*
 4.
